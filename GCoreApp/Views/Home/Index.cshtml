@@ -1,0 +1,50 @@
+﻿
+<h1>Авторизация прошла успешно!</h1>
+<br />
+<br />
+
+<br />
+
+<label>Access token:</label>
+@ViewData["Access"]
+<br />
+<br />
+<br />
+<h2>Загрузить видео на хостинг G core lab:</h2>
+<form method="post" enctype="multipart/form-data" action="upload">
+          
+   <input type="file" name="file" multiple />
+   <input type="submit" value ="Upload" />
+</form>
+
+<br />
+<br />
+<h2>Список видео: </h2>
+<h3>Чтобы его обновить, обновите страницу</h3>
+<br />
+<br />
+ @foreach (var item in (List<GCoreApp.Models.GetVideoResponse>)ViewData["MyVideos"])
+    {
+        <label class=" " for="@item.name">Название видео: @item.name</label>
+         <br/>
+        <label class=" " for="@item.status">Cтатус видео: @item.status</label>
+        <br/>
+        <label>Номер заявки на анализ: @item.cv_id</label>
+        <br/>
+            @Html.ActionLink("Отправить видео на анализ CV", "Index", "CV", new {_id =@item.id})
+        <br/>
+                    @Html.ActionLink("Обновить статус заявки CV", "Index", "Status", new {id = @item.cv_id},null)
+        <br />
+        <label>Статус заявки на анализ: @item.cv_status</label>
+        <br/>
+        <label>Результат проверки CV: @item.cv_result</label>
+        <br/>
+        <label class=" " for="@item.id">Id видео: @item.id</label>
+        <br />
+        <iframe width="560" height="315" src="@item.iframe_url" frameborder="0" allowfullscreen></iframe>
+
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+    }
